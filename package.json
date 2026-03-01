@@ -1,0 +1,35 @@
+{
+	"name": "ec-lang-logo",
+	"version": "1.0.0",
+	"description": "",
+	"keywords": [],
+	"license": "MIT",
+	"author": "",
+	"type": "module",
+	"main": "./dist/index.mjs",
+	"module": "./dist/index.mjs",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		"types": "./dist/index.d.ts",
+		"default": "./dist/index.mjs"
+	},
+	"scripts": {
+		"format": "biome format --write",
+		"format:check": "biome format",
+		"build": "tsdown",
+		"watch": "tsdown --watch ./src"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "2.4.4",
+		"@expressive-code/core": "^0.41.3",
+		"tsdown": "0.21.0-beta.2",
+		"typescript": "^5.9.3"
+	},
+	"peerDependencies": {
+		"@expressive-code/core": "^0.41.3"
+	},
+	"packageManager": "pnpm@10.30.3",
+	"dependencies": {
+		"simple-icons": "^16.10.0"
+	}
+}
