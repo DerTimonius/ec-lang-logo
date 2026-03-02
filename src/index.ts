@@ -2,63 +2,66 @@ import { definePlugin } from '@expressive-code/core';
 import { h } from '@expressive-code/core/hast';
 import * as icons from 'simple-icons';
 
+const LANGUAGE_MAP = {
+	js: { icon: icons.siJavascript },
+	javascript: { icon: icons.siJavascript },
+	ts: { icon: icons.siTypescript },
+	typescript: { icon: icons.siTypescript },
+	py: { icon: icons.siPython },
+	python: { icon: icons.siPython },
+	cpp: { icon: icons.siCplusplus },
+	php: { icon: icons.siPhp },
+	go: { icon: icons.siGo },
+	rust: { icon: icons.siRust },
+	rs: { icon: icons.siRust },
+	rb: { icon: icons.siRuby },
+	ruby: { icon: icons.siRuby },
+	swift: { icon: icons.siSwift },
+	kotlin: { icon: icons.siKotlin },
+	kt: { icon: icons.siKotlin },
+	dart: { icon: icons.siDart },
+	sql: { icon: icons.siPostgresql },
+	bash: { icon: icons.siGnubash },
+	sh: { icon: icons.siGnubash },
+	shell: { icon: icons.siGnubash },
+	yml: { icon: icons.siYaml },
+	yaml: { icon: icons.siYaml },
+	json: { icon: icons.siJson },
+
+	html: { icon: icons.siHtml5 },
+	css: { icon: icons.siCss },
+	scss: { icon: icons.siSass },
+	react: { icon: icons.siReact },
+	md: { icon: icons.siMarkdown },
+	markdown: { icon: icons.siMarkdown },
+	mdx: { icon: icons.siMdx },
+	jsx: { icon: icons.siReact },
+	tsx: { icon: icons.siReact },
+	vue: { icon: icons.siVuedotjs },
+	svelte: { icon: icons.siSvelte },
+	astro: { icon: icons.siAstro },
+	angular: { icon: icons.siAngular },
+	docker: { icon: icons.siDocker },
+	dockerfile: { icon: icons.siDocker },
+} as const;
+
+type Language = keyof typeof LANGUAGE_MAP;
+
 interface PluginOptions {
 	color: 'mono' | 'original';
+	excludedLangs: Language[];
 }
 
-const DEFAULT_OPTS = { color: 'mono' } satisfies PluginOptions;
-
-const LANGUAGE_MAP = {
-	js: { icon: icons.siJavascript, style: 'fill' },
-	javascript: { icon: icons.siJavascript, style: 'fill' },
-	ts: { icon: icons.siTypescript, style: 'fill' },
-	typescript: { icon: icons.siTypescript, style: 'fill' },
-	py: { icon: icons.siPython, style: 'stroke' },
-	python: { icon: icons.siPython, style: 'stroke' },
-	cpp: { icon: icons.siCplusplus, style: 'stroke' },
-	php: { icon: icons.siPhp, style: 'stroke' },
-	go: { icon: icons.siGo, style: 'stroke' },
-	rust: { icon: icons.siRust, style: 'stroke' },
-	rs: { icon: icons.siRust, style: 'stroke' },
-	rb: { icon: icons.siRuby, style: 'stroke' },
-	ruby: { icon: icons.siRuby, style: 'stroke' },
-	swift: { icon: icons.siSwift, style: 'stroke' },
-	kotlin: { icon: icons.siKotlin, style: 'stroke' },
-	kt: { icon: icons.siKotlin, style: 'stroke' },
-	dart: { icon: icons.siDart, style: 'stroke' },
-	sql: { icon: icons.siPostgresql, style: 'stroke' },
-	bash: { icon: icons.siGnubash, style: 'stroke' },
-	sh: { icon: icons.siGnubash, style: 'stroke' },
-	shell: { icon: icons.siGnubash, style: 'stroke' },
-	yml: { icon: icons.siYaml, style: 'stroke' },
-	yaml: { icon: icons.siYaml, style: 'stroke' },
-	json: { icon: icons.siJson, style: 'stroke' },
-
-	html: { icon: icons.siHtml5, style: 'stroke' },
-	css: { icon: icons.siCss, style: 'stroke' },
-	scss: { icon: icons.siSass, style: 'stroke' },
-	react: { icon: icons.siReact, style: 'stroke' },
-	jsx: { icon: icons.siReact, style: 'stroke' },
-	tsx: { icon: icons.siReact, style: 'stroke' },
-	vue: { icon: icons.siVuedotjs, style: 'stroke' },
-	svelte: { icon: icons.siSvelte, style: 'stroke' },
-	astro: { icon: icons.siAstro, style: 'stroke' },
-	angular: { icon: icons.siAngular, style: 'stroke' },
-	docker: { icon: icons.siDocker, style: 'stroke' },
-	dockerfile: { icon: icons.siDocker, style: 'stroke' },
-} as const satisfies Record<
-	string,
-	{ icon: icons.SimpleIcon; style: 'stroke' | 'fill' }
->;
+const DEFAULT_OPTS = {
+	color: 'mono',
+	excludedLangs: [],
+} satisfies PluginOptions;
 
 export function pluginLanguageLogo(config?: PluginOptions) {
-	const opts = config ?? DEFAULT_OPTS;
+	const opts = { ...DEFAULT_OPTS, ...config };
 	return definePlugin({
 		name: 'Language Logo',
 		baseStyles: `
-      .expressive-code .frame {
-        position: relative;
-      }
       .ec-lang-logo {
         position: absolute;
         width: 48px;
@@ -66,51 +69,78 @@ export function pluginLanguageLogo(config?: PluginOptions) {
         bottom: 0.6rem;
         right: 0.6rem;
         display: flex;
+        opacity: 0.2;
+        transition: all 0.3s ease-out;
         align-items: center;
         justify-content: center;
         pointer-events: none;
         z-index: 999;
       }
+      [data-small=true] {
+        width: 32px;
+        height: 32px;
+        bottom: 0.8rem;
+        right: 2.7rem; 
+      }
+
+      .expressive-code:hover .ec-lang-logo {
+        opacity: 1;
+      }
     `,
 		hooks: {
 			postprocessRenderedBlock: async ({ codeBlock, renderData }) => {
-				console.log('codeBlock: ', codeBlock);
-				const lang = codeBlock.language;
-				const foundLang = LANGUAGE_MAP[lang as keyof typeof LANGUAGE_MAP];
+				if (codeBlock.meta.includes('hide-badge')) {
+					return;
+				}
+				const colorMatch = codeBlock.meta.match(
+					/badge-color=(?:["']([^"']+)["']|([^ \t\n\r\f]+))/,
+				);
+				const lang = codeBlock.language as Language;
+				if (opts.excludedLangs.includes(lang)) {
+					return;
+				}
 
-				console.log('foundLang: ', foundLang);
+				const foundLang = LANGUAGE_MAP[lang];
+
 				if (!foundLang) {
 					return;
 				}
 
+				const loc = codeBlock.getLines().length;
 				const icon = foundLang.icon;
+				const color = colorMatch ? colorMatch[1] || colorMatch[2] : opts.color;
 
-				const logoSvg = h('div', { class: 'ec-lang-logo' }, [
-					h(
-						'svg',
-						{
-							role: 'img',
-							viewBox: '0 0 24 24',
-							width: '32px',
-							height: '32px',
-							...(foundLang.style === 'stroke'
-								? {
-										stroke: opts.color === 'mono' ? '#fff' : `#${icon.hex}`,
-									}
-								: {
-										fill: opts.color === 'mono' ? '#fff' : `#${icon.hex}`,
-									}),
-						},
-						[
-							h('title', { innerHtml: icon.title }),
-							h('path', {
-								d: icon.path,
-							}),
-						],
-					),
-				]);
+				const logoSvg = h(
+					'div',
+					{
+						class: 'ec-lang-logo',
+						'data-small': loc === 1 ? 'true' : undefined,
+					},
+					[
+						h(
+							'svg',
+							{
+								role: 'img',
+								viewBox: '0 0 24 24',
+								width: loc === 1 ? '24px' : '32px',
+								height: loc === 1 ? '24px' : '32px',
+								fill:
+									color === 'mono'
+										? '#fff'
+										: color === 'original'
+											? `#${icon.hex}`
+											: color,
+							},
+							[
+								h('title', { innerHtml: icon.title }),
+								h('path', {
+									d: icon.path,
+								}),
+							],
+						),
+					],
+				);
 
-				console.dir(logoSvg, { depth: Infinity });
 				renderData.blockAst.children.push(logoSvg);
 			},
 		},
