@@ -48,7 +48,7 @@ const LANGUAGE_MAP = {
 type Language = keyof typeof LANGUAGE_MAP;
 
 interface PluginOptions {
-	color: 'mono' | 'original';
+	color: 'mono' | 'original' | (`#${string}` & {});
 	excludedLangs: Language[];
 }
 
@@ -59,6 +59,7 @@ const DEFAULT_OPTS = {
 
 export function pluginLanguageLogo(config?: PluginOptions) {
 	const opts = { ...DEFAULT_OPTS, ...config };
+
 	return definePlugin({
 		name: 'Language Logo',
 		baseStyles: `
@@ -74,7 +75,7 @@ export function pluginLanguageLogo(config?: PluginOptions) {
         align-items: center;
         justify-content: center;
         pointer-events: none;
-        z-index: 999;
+        z-index: 10;
       }
       [data-small=true] {
         width: 32px;
@@ -84,7 +85,7 @@ export function pluginLanguageLogo(config?: PluginOptions) {
       }
 
       .expressive-code:hover .ec-lang-logo {
-        opacity: 1;
+        opacity: 0.8;
       }
     `,
 		hooks: {
