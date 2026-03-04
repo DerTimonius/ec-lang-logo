@@ -11,21 +11,23 @@
 	],
 	"license": "MIT",
 	"author": "Timon Jurschitsch <contact@dertimonius.eu>",
-	"home": "https://github.com/dertimonius/ec-lang-logo",
+	"home": "https://github.com/DerTimonius/ec-lang-logo",
 	"bugs": {
-		"url": "https://github.com/dertimonius/ec-lang-logo"
+		"url": "https://github.com/DerTimonius/ec-lang-logo"
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/dertimonius/ec-lang-logo.git"
+		"url": "git+https://github.com/DerTimonius/ec-lang-logo.git"
 	},
 	"type": "module",
 	"main": "./dist/index.mjs",
 	"module": "./dist/index.mjs",
 	"types": "./dist/index.d.ts",
 	"exports": {
-		"types": "./dist/index.d.ts",
-		"default": "./dist/index.mjs"
+		".": {
+			"types": "./dist/index.d.ts",
+			"default": "./dist/index.mjs"
+		}
 	},
 	"publishConfig": {
 		"provenance": true
