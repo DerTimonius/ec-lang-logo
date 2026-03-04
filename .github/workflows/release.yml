@@ -12,6 +12,7 @@ jobs:
     name: Release
     runs-on: ubuntu-latest
     permissions:
+      id-token: write
       contents: write
       pull-requests: write
     steps:
@@ -20,6 +21,12 @@ jobs:
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24" # or your preferred version
+          registry-url: "https://registry.npmjs.org"
 
       - name: Install Dependencies
         if: steps.pnpm-cache.outputs.cache-hit != 'true'
@@ -32,4 +39,3 @@ jobs:
           publish: pnpm release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
