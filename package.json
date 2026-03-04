@@ -24,8 +24,10 @@
 	"module": "./dist/index.mjs",
 	"types": "./dist/index.d.ts",
 	"exports": {
-		"types": "./dist/index.d.ts",
-		"default": "./dist/index.mjs"
+		".": {
+			"types": "./dist/index.d.ts",
+			"default": "./dist/index.mjs"
+		}
 	},
 	"publishConfig": {
 		"provenance": true
