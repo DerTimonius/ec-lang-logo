@@ -1,5 +1,11 @@
 # ec-lang-logo
 
+## 1.0.3
+
+### Patch Changes
+
+- cadef8f: fix release and export
+
 ## 1.0.2
 
 ### Patch Changes
