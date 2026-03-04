@@ -1,10 +1,24 @@
 {
 	"name": "ec-lang-logo",
 	"version": "1.0.0",
-	"description": "",
-	"keywords": [],
+	"description": "Add the logo of the language to your Expressive Code blocks.",
+	"keywords": [
+		"expressive code",
+		"starlight",
+		"astro",
+		"code block",
+		"logo"
+	],
 	"license": "MIT",
-	"author": "",
+	"author": "Timon Jurschitsch <contact@dertimonius.eu>",
+	"home": "https://github.com/dertimonius/ec-lang-logo",
+	"bugs": {
+		"url": "https://github.com/dertimonius/ec-lang-logo"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/dertimonius/ec-lang-logo.git"
+	},
 	"type": "module",
 	"main": "./dist/index.mjs",
 	"module": "./dist/index.mjs",
@@ -16,8 +30,11 @@
 	"scripts": {
 		"format": "biome format --write",
 		"format:check": "biome format",
+		"lint": "biome lint --write",
+		"lint:check": "biome lint",
+		"typecheck": "tsc --noEmit",
 		"build": "tsdown",
-		"watch": "tsdown --watch ./src"
+		"dev": "tsdown --watch ./src"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "2.4.4",
