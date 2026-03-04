@@ -34,10 +34,13 @@
 		"lint:check": "biome lint",
 		"typecheck": "tsc --noEmit",
 		"build": "tsdown",
-		"dev": "tsdown --watch ./src"
+		"dev": "tsdown --watch ./src",
+		"release": "changeset version && changeset publish",
+		"prepublishOnly": "biome check && tsc --noEmit"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "2.4.4",
+		"@changesets/cli": "^2.30.0",
 		"@expressive-code/core": "^0.41.3",
 		"tsdown": "0.21.0-beta.2",
 		"typescript": "^5.9.3"
