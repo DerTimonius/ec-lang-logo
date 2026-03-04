@@ -1,5 +1,11 @@
 # ec-lang-logo
 
+## 1.0.4
+
+### Patch Changes
+
+- e4b679a: fix release script, add files field
+
 ## 1.0.3
 
 ### Patch Changes
