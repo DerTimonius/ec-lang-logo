@@ -4,9 +4,9 @@ A plugin for Expressive Code that adds language logos (coming from [Simple Icons
 
 ## Examples
 
-<img src="./assets/plain.png" alt="example code block with mono color" width="250" />
-<img src="./assets/original.png" alt="example code block with the original brand color" width="250" />
-<img src="./assets/light.png" alt="example code block with a light theme" width="250" />
+<img src="./assets/plain.png" alt="example code block with mono color" />
+<img src="./assets/original.png" alt="example code block with the original brand color" />
+<img src="./assets/light.png" alt="example code block with a light theme" />
 
 For more examples, see [my blog post](http://blog.dertimonius.dev/posts/til-38).
 
