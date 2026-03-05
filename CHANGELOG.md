@@ -1,5 +1,14 @@
 # ec-lang-logo
 
+## 1.1.0
+
+### Minor Changes
+
+- 16297a4: Allows for automatic color change from `#fff` to `#000` when the code block is shown with a light theme.
+  This is achieved by looking at the `html[data-theme]` value.
+
+  Also adds another `color` option: `theme` takes the standard code foreground color and applies it to the language logo.
+
 ## 1.0.4
 
 ### Patch Changes
