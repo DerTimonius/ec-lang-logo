@@ -27,6 +27,8 @@ const LANGUAGE_MAP = {
 	yml: { icon: icons.siYaml },
 	yaml: { icon: icons.siYaml },
 	json: { icon: icons.siJson },
+	graphql: { icon: icons.siGraphql },
+	gql: { icon: icons.siGraphql },
 
 	html: { icon: icons.siHtml5 },
 	css: { icon: icons.siCss },
@@ -70,7 +72,7 @@ export function pluginLanguageLogo(config?: PluginOptions) {
       }
 
       html[data-theme=dark] {
-      --ec-lang-logo: #fff;
+      --ec-lang-logo: #eee;
       }
 
       .ec-lang-logo {
