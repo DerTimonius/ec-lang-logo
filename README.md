@@ -52,7 +52,7 @@ pluginLanguageLogo({
 ### Options
 
 - `color`: Controls the badge color
-  - `'mono'`: Adapts to theme ('#fff' for dark, '#111' for light)
+  - `'mono'`: Adapts to theme ('#fff' for dark themes, '#111' for light themes)
   - `'original'`: Uses the official language brand color
   - `'theme'`: Takes the code foreground color of the currently active theme
   - `'#hexcolor'`: Custom hex color (e.g., `'#ff0000'`)
