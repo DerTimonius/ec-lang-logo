@@ -27,6 +27,8 @@ const LANGUAGE_MAP = {
 	yml: { icon: icons.siYaml },
 	yaml: { icon: icons.siYaml },
 	json: { icon: icons.siJson },
+	graphql: { icon: icons.siGraphql },
+	gql: { icon: icons.siGraphql },
 
 	html: { icon: icons.siHtml5 },
 	css: { icon: icons.siCss },
@@ -47,8 +49,10 @@ const LANGUAGE_MAP = {
 
 type Language = keyof typeof LANGUAGE_MAP;
 
+type Color = 'mono' | 'original' | 'theme' | (`#${string}` & {});
+
 interface PluginOptions {
-	color: 'mono' | 'original' | (`#${string}` & {});
+	color: Color;
 	excludedLangs: Language[];
 }
 
@@ -63,6 +67,14 @@ export function pluginLanguageLogo(config?: PluginOptions) {
 	return definePlugin({
 		name: 'Language Logo',
 		baseStyles: `
+      html[data-theme=light] {
+      --ec-lang-logo: #111;
+      }
+
+      html[data-theme=dark] {
+      --ec-lang-logo: #fff;
+      }
+
       .ec-lang-logo {
         position: absolute;
         width: 48px;
@@ -77,7 +89,7 @@ export function pluginLanguageLogo(config?: PluginOptions) {
         pointer-events: none;
         z-index: 10;
       }
-      [data-small=true] {
+      [data-ec-logo-small=true] {
         width: 32px;
         height: 32px;
         bottom: 0.8rem;
@@ -106,16 +118,17 @@ export function pluginLanguageLogo(config?: PluginOptions) {
 				if (!foundLang) {
 					return;
 				}
-
 				const loc = codeBlock.getLines().length;
 				const icon = foundLang.icon;
-				const color = colorMatch ? colorMatch[1] || colorMatch[2] : opts.color;
+				const color = colorMatch
+					? ((colorMatch[1] || colorMatch[2]) as Color)
+					: opts.color;
 
 				const logoSvg = h(
 					'div',
 					{
 						class: 'ec-lang-logo',
-						'data-small': loc === 1 ? 'true' : undefined,
+						'data-ec-logo-small': loc === 1 ? 'true' : undefined,
 					},
 					[
 						h(
@@ -125,12 +138,7 @@ export function pluginLanguageLogo(config?: PluginOptions) {
 								viewBox: '0 0 24 24',
 								width: loc === 1 ? '24px' : '32px',
 								height: loc === 1 ? '24px' : '32px',
-								fill:
-									color === 'mono'
-										? '#fff'
-										: color === 'original'
-											? `#${icon.hex}`
-											: color,
+								fill: getFillColor(color, icon.hex),
 							},
 							[
 								h('title', { innerHtml: icon.title }),
@@ -146,4 +154,17 @@ export function pluginLanguageLogo(config?: PluginOptions) {
 			},
 		},
 	});
+}
+
+function getFillColor(color: Color, iconHex: string): string {
+	if (color === 'mono') {
+		return 'var(--ec-lang-logo)';
+	}
+	if (color === 'theme') {
+		return 'var(--ec-codeFg)';
+	}
+	if (color === 'original') {
+		return `#${iconHex}`;
+	}
+	return color;
 }
