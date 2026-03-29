@@ -30,6 +30,7 @@ const LANGUAGE_MAP = {
 	json: { icon: icons.siJson },
 	graphql: { icon: icons.siGraphql },
 	gql: { icon: icons.siGraphql },
+	prisma: { icon: icons.siPrisma },
 
 	html: { icon: icons.siHtml5 },
 	css: { icon: icons.siCss },
