@@ -1,5 +1,12 @@
 # ec-lang-logo
 
+## 1.0.5
+
+### Patch Changes
+
+- 8a484c4: update dependencies
+- 2ba770a: use the built-in `metaOptions` functions instead of parsting the meta strings with regex
+
 ## 1.1.0
 
 ### Minor Changes
