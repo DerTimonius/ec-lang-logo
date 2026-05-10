@@ -1,69 +1,69 @@
 {
-  "name": "ec-lang-logo",
-  "version": "1.0.4",
-  "description": "Add the logo of the language to your Expressive Code blocks.",
-  "keywords": [
-    "astro",
-    "code block",
-    "expressive code",
-    "logo",
-    "starlight"
-  ],
-  "bugs": {
-    "url": "https://github.com/DerTimonius/ec-lang-logo"
-  },
-  "license": "MIT",
-  "author": "Timon Jurschitsch <contact@dertimonius.eu>",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/DerTimonius/ec-lang-logo.git"
-  },
-  "files": [
-    "dist"
-  ],
-  "type": "module",
-  "main": "./dist/index.mjs",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "default": "./dist/index.mjs"
-    }
-  },
-  "publishConfig": {
-    "provenance": true
-  },
-  "scripts": {
-    "format": "biome format --write",
-    "format:check": "biome format",
-    "lint": "biome lint --write",
-    "lint:check": "biome lint",
-    "typecheck": "tsc --noEmit",
-    "build": "tsdown",
-    "dev": "tsdown --watch ./src",
-    "release": "pnpm build && changeset version && changeset publish",
-    "prepublishOnly": "biome check && tsc --noEmit"
-  },
-  "dependencies": {
-    "simple-icons": "^16.10.0"
-  },
-  "devDependencies": {
-    "@biomejs/biome": "2.4.4",
-    "@changesets/cli": "^2.31.0",
-    "@expressive-code/core": "^0.41.3",
-    "tsdown": "0.22.0",
-    "typescript": "^5.9.3"
-  },
-  "peerDependencies": {
-    "@expressive-code/core": "^0.41.3"
-  },
-  "packageManager": "pnpm@10.30.3",
-  "pnpm": {
-    "overrides": {
-      "picomatch": "^2.3.2",
-      "postcss": "^8.5.10"
-    }
-  },
-  "home": "https://github.com/DerTimonius/ec-lang-logo"
+	"name": "ec-lang-logo",
+	"version": "1.0.4",
+	"description": "Add the logo of the language to your Expressive Code blocks.",
+	"keywords": [
+		"astro",
+		"code block",
+		"expressive code",
+		"logo",
+		"starlight"
+	],
+	"bugs": {
+		"url": "https://github.com/DerTimonius/ec-lang-logo"
+	},
+	"license": "MIT",
+	"author": "Timon Jurschitsch <contact@dertimonius.eu>",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/DerTimonius/ec-lang-logo.git"
+	},
+	"files": [
+		"dist"
+	],
+	"type": "module",
+	"main": "./dist/index.mjs",
+	"module": "./dist/index.mjs",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"default": "./dist/index.mjs"
+		}
+	},
+	"publishConfig": {
+		"provenance": true
+	},
+	"scripts": {
+		"format": "biome format --write",
+		"format:check": "biome format",
+		"lint": "biome lint --write",
+		"lint:check": "biome lint",
+		"typecheck": "tsc --noEmit",
+		"build": "tsdown",
+		"dev": "tsdown --watch ./src",
+		"release": "pnpm build && changeset version && changeset publish",
+		"prepublishOnly": "biome check && tsc --noEmit"
+	},
+	"dependencies": {
+		"simple-icons": "^16.10.0"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "2.4.4",
+		"@changesets/cli": "^2.31.0",
+		"@expressive-code/core": "^0.41.3",
+		"tsdown": "0.22.0",
+		"typescript": "^5.9.3"
+	},
+	"peerDependencies": {
+		"@expressive-code/core": "^0.41.3"
+	},
+	"packageManager": "pnpm@10.30.3",
+	"pnpm": {
+		"overrides": {
+			"picomatch": "^2.3.2",
+			"postcss": "^8.5.10"
+		}
+	},
+	"home": "https://github.com/DerTimonius/ec-lang-logo"
 }
