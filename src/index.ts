@@ -9,6 +9,7 @@ const LANGUAGE_MAP = {
 	typescript: { icon: icons.siTypescript },
 	py: { icon: icons.siPython },
 	python: { icon: icons.siPython },
+	c: { icon: icons.siC },
 	cpp: { icon: icons.siCplusplus },
 	php: { icon: icons.siPhp },
 	go: { icon: icons.siGo },
@@ -29,6 +30,7 @@ const LANGUAGE_MAP = {
 	json: { icon: icons.siJson },
 	graphql: { icon: icons.siGraphql },
 	gql: { icon: icons.siGraphql },
+	prisma: { icon: icons.siPrisma },
 
 	html: { icon: icons.siHtml5 },
 	css: { icon: icons.siCss },
@@ -102,12 +104,12 @@ export function pluginLanguageLogo(config?: PluginOptions) {
     `,
 		hooks: {
 			postprocessRenderedBlock: async ({ codeBlock, renderData }) => {
-				if (codeBlock.meta.includes('hide-badge')) {
+				if (codeBlock.metaOptions.getBoolean('hide-badge')) {
 					return;
 				}
-				const colorMatch = codeBlock.meta.match(
-					/badge-color=(?:["']([^"']+)["']|([^ \t\n\r\f]+))/,
-				);
+				const metaColor = codeBlock.metaOptions.getString('badge-color') as
+					| Color
+					| undefined;
 				const lang = codeBlock.language as Language;
 				if (opts.excludedLangs.includes(lang)) {
 					return;
@@ -120,9 +122,7 @@ export function pluginLanguageLogo(config?: PluginOptions) {
 				}
 				const loc = codeBlock.getLines().length;
 				const icon = foundLang.icon;
-				const color = colorMatch
-					? ((colorMatch[1] || colorMatch[2]) as Color)
-					: opts.color;
+				const color = metaColor ?? opts.color;
 
 				const logoSvg = h(
 					'div',
